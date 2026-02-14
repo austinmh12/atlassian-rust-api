@@ -1,10 +1,8 @@
 // Modules
-mod error;
-mod rest_client;
+mod endpoints;
 mod jira;
 
 // Flatten
-pub use error::{Error, Result};
 pub use jira::{Jira, JiraBuilder};
 
 // Public Modules
