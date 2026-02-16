@@ -23,7 +23,7 @@ pub(crate) struct RestClient {
 
 impl RestClient {
 	fn rest_endpoint(&self, path: &str) -> Result<Url> {
-		Ok(self.url.join(&self.api_root)?.join(&self.api_version)?.join(path)?)
+		Ok(self.url.join(&format!("{}/{}/{}", self.api_root, &self.api_version, path))?)
 	}
 
 	/// Creates a `reqwest::Request` with the given method, sends the request,
