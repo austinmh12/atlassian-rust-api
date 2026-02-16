@@ -1,5 +1,5 @@
-use reqwest::Url;
-use crate::Result;
+use reqwest::{Method, Url};
+use crate::{Result, Error, web::Endpoint};
 
 #[derive(Debug, Clone)]
 pub(crate) struct RestClient {
@@ -24,5 +24,72 @@ pub(crate) struct RestClient {
 impl RestClient {
 	fn rest_endpoint(&self, path: &str) -> Result<Url> {
 		Ok(self.url.join(&self.api_root)?.join(&self.api_version)?.join(path)?)
+	}
+
+	/// Creates a `reqwest::Request` with the given method, sends the request,
+	/// and attempts to deserialize the response into the given `T`
+	async fn request<T, E>(&self, request: E, method: Method) -> Result<T>
+	where
+		T: serde::de::DeserializeOwned,
+		E: Endpoint,
+	{
+		let mut url = self.rest_endpoint(&request.endpoint())?;
+		request.parameters().add_to_url(&mut url);
+		let req = match method {
+			Method::GET => self.session.get(url),
+			Method::POST => self.session.post(url),
+			Method::PATCH => self.session.patch(url),
+			Method::PUT => self.session.put(url),
+			Method::DELETE => self.session.delete(url),
+			_ => return Err(Error::UnsupportedOperation(method))
+		}.header("Accept", "application/json");
+		let req = if let Some((mime_type, body)) = request.body()? {
+			req.header("Content-Type", mime_type).body(body)
+		} else {
+			req.header("Content-Type", "application/json") // Maybe...
+		};
+		let req = req.basic_auth(self.username.as_ref().unwrap(), self.password.as_ref()); // Hard code for now and panic if not provided
+		let resp = req.send().await?;
+		match resp.error_for_status_ref() {
+			Ok(_) => Ok(resp.json().await?),
+			Err(e) => Err(e.into())
+		}
+	}
+
+	/// Creates a `reqwest::Request` with the given method, sends the request,
+	/// and returns nothing if the request is successful.
+	async fn ignore<E>(&self, request: E, method: Method) -> Result<()>
+	where
+		E: Endpoint,
+	{
+		let mut url = self.rest_endpoint(&request.endpoint())?;
+		request.parameters().add_to_url(&mut url);
+		let req = match method {
+			Method::GET => self.session.get(url),
+			Method::POST => self.session.post(url),
+			Method::PATCH => self.session.patch(url),
+			Method::PUT => self.session.put(url),
+			Method::DELETE => self.session.delete(url),
+			_ => return Err(Error::UnsupportedOperation(method))
+		}.header("Accept", "application/json");
+		let req = if let Some((mime_type, body)) = request.body()? {
+			req.header("Content-Type", mime_type).body(body)
+		} else {
+			req.header("Content-Type", "application/json") // Maybe...
+		};
+		let req = req.basic_auth(self.username.as_ref().unwrap(), self.password.as_ref()); // Hard code for now and panic if not provided
+		let resp = req.send().await?;
+		match resp.error_for_status_ref() {
+			Ok(_) => Ok(()),
+			Err(e) => Err(e.into())
+		}
+	}
+
+	pub async fn get<T, E>(&self, request: E) -> Result<T>
+	where
+		T: serde::de::DeserializeOwned,
+		E: Endpoint,
+	{
+		self.request(request, Method::GET).await
 	}
 }

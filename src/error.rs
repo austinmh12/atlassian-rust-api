@@ -10,6 +10,7 @@ pub enum Error {
 	ApiResponseError(reqwest::Error),
 	#[from]
 	JSONParseError(serde_json::Error),
+	UnsupportedOperation(reqwest::Method),
 }
 
 impl core::fmt::Display for Error {

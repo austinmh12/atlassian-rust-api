@@ -73,6 +73,6 @@ impl GetPermissionsBuilder {
 	}
 
 	async fn send(self) -> Result<serde_json::Value> {
-		Ok(self.client.get(self.request))
+		self.client.get(self.request).await
 	}
 }
