@@ -1,7 +1,5 @@
 use std::borrow::Cow;
 
-use crate::Result;
-
 pub trait ParamValue<'a> {
 	fn as_value(&self) -> Cow<'a, str>;
 }

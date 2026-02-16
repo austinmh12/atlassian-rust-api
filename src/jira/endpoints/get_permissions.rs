@@ -1,6 +1,7 @@
 use std::sync::Arc;
 
 use crate::{Result, rest_client::RestClient, web::{Endpoint, QueryParams}};
+use crate::Jira;
 
 #[derive(Debug, Clone)]
 pub struct GetPermissionsBuilder {
@@ -74,5 +75,17 @@ impl GetPermissionsBuilder {
 
 	async fn send(self) -> Result<serde_json::Value> {
 		self.client.get(self.request).await
+	}
+}
+
+// Impl IntoFuture for GetPermissionsBuilder
+crate::macros::futurize!(GetPermissionsBuilder, serde_json::Value);
+
+// Impl Jira
+impl Jira {
+	/// Returns a list of permissions indicating which permissions the user has. Details of the user's permissions can
+	/// be obtained in a global, project, issue, or comment context.
+	pub fn get_permissions(&self) -> GetPermissionsBuilder {
+		GetPermissionsBuilder::new(Arc::clone(&self.client))
 	}
 }

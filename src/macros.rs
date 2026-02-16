@@ -1,4 +1,5 @@
-/// Macro that allows for calling `.await` on a struct to turn the following
+/// Macro that implements `IntoFuture` for structs and allows for calling `.await` 
+/// on the struct to turn the following:
 /// ```rust
 /// let results: T = client.endpoint().send().await?;
 /// ```
@@ -7,8 +8,8 @@
 /// let results: T = client.endpoint().await?;
 /// ```
 macro_rules! futurize {
-	(&str:ident) => {
-		impl IntoFuture for &str {
+	($str:ident) => {
+		impl IntoFuture for $str {
 			type Output = Result<()>;
 			type IntoFuture = std::pin::Pin<Box<dyn std::future::Future<Output = Self::Output>>>;
 
@@ -18,7 +19,7 @@ macro_rules! futurize {
 		}
 	};
 	($str:ident, $out:ty) => {
-		impl IntoFuture for &str {
+		impl IntoFuture for $str {
 			type Output = Result<$out>;
 			type IntoFuture = std::pin::Pin<Box<dyn std::future::Future<Output = Self::Output>>>;
 
@@ -28,3 +29,5 @@ macro_rules! futurize {
 		}
 	}
 }
+
+pub(crate) use futurize;

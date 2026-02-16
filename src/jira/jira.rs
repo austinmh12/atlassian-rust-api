@@ -5,7 +5,7 @@ use crate::Result;
 
 #[derive(Debug, Clone)]
 pub struct Jira {
-	client: Arc<RestClient>,
+	pub(crate) client: Arc<RestClient>,
 }
 
 impl Jira {
