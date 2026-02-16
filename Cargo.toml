@@ -12,6 +12,7 @@ keywords = ["rest", "api", "atlassian", "jira", "confluence", "bitbucket"]
 [dependencies]
 # Web
 reqwest = { version = "0.13", features = ["json"] }
+url = "2.5"
 
 # JSON
 serde = { version = "1", features = ["derive"] }

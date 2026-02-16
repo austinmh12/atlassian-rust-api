@@ -1,6 +1,7 @@
 use std::sync::Arc;
 
 use crate::rest_client::{RestClient, RestClientBuilder};
+use crate::Result;
 
 #[derive(Debug, Clone)]
 pub struct Jira {
@@ -59,10 +60,10 @@ impl JiraBuilder {
 		self
 	}
 
-	pub fn build(self) -> Jira {
-		let client = self.client.build();
-		Jira {
+	pub fn build(self) -> Result<Jira> {
+		let client = self.client.build()?;
+		Ok(Jira {
 			client: Arc::new(client)
-		}
+		})
 	}
 }

@@ -1,4 +1,5 @@
 use super::client::RestClient;
+use crate::Result;
 
 #[derive(Debug, Default)]
 pub(crate) struct RestClientBuilder {
@@ -61,9 +62,9 @@ impl RestClientBuilder {
 		self
 	}
 
-	pub fn build(self) -> RestClient {
-		RestClient {
-			url: self.url.unwrap_or_default(),
+	pub fn build(self) -> Result<RestClient> {
+		Ok(RestClient {
+			url: url::Url::parse(&self.url.unwrap_or_default())?,
 			username: self.username,
 			password: self.password,
 			timeout: self.timeout.unwrap_or(75),
@@ -71,6 +72,6 @@ impl RestClientBuilder {
 			api_version: self.api_version.unwrap_or("latest".to_string()),
 			verify_ssl: self.verify_ssl.unwrap_or(true),
 			session: self.session.unwrap_or(reqwest::Client::new()),
-		}
+		})
 	}
 }

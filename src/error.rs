@@ -5,6 +5,8 @@ pub type Result<T> = core::result::Result<T, Error>;
 #[derive(Debug, From)]
 pub enum Error {
 	#[from]
+	URLParseError(url::ParseError),
+	#[from]
 	ApiResponseError(reqwest::Error),
 	#[from]
 	JSONParseError(serde_json::Error),
