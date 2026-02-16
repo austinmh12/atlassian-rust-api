@@ -1,22 +1,4 @@
-#[derive(Debug, Clone)]
-pub(crate) struct RestClient {
-	/// The url to be used in the request
-	url: String,
-	/// Username, defaults to None.
-	username: Option<String>,
-	/// Password, defaults to None.
-	password: Option<String>,
-	/// Request timeout, defaults to 75.
-	timeout: u32,
-	/// Root for the API requests, defaults to "rest/api"
-	api_root: String,
-	/// Version of the API to use, defaults to "latest"
-	api_version: String,
-	/// Turn on/off SSL verification, defaults to true
-	verify_ssl: bool,
-	/// Inner client session object
-	session: reqwest::Client,
-}
+use super::client::RestClient;
 
 #[derive(Debug, Default)]
 pub(crate) struct RestClientBuilder {
