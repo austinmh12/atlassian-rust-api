@@ -133,4 +133,9 @@ impl Jira {
 	pub fn get_issue(&self, key: impl Into<String>) -> GetIssueBuilder {
 		GetIssueBuilder::new(Arc::clone(&self.client)).key(key)
 	}
+
+	/// Alias for [`Jira::get_issue`]
+	pub fn issue(&self, key: impl Into<String>) -> GetIssueBuilder {
+		self.get_issue(key)
+	}
 }
