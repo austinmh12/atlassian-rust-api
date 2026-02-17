@@ -19,7 +19,7 @@ struct GetIssueRequest {
 
 impl Endpoint for GetIssueRequest {
 	fn endpoint(&self) -> std::borrow::Cow<'static, str> {
-		self.key.clone().into()
+		format!("issue/{}", &self.key).into()
 	}
 
 	fn parameters(&self) -> crate::web::QueryParams<'_> {
