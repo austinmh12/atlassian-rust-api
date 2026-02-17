@@ -64,6 +64,7 @@ impl GetCustomFieldsBuilder {
 crate::macros::futurize!(GetCustomFieldsBuilder, serde_json::Value);
 
 impl Jira {
+	/// Get custom fields
 	pub fn get_custom_fields(&self) -> GetCustomFieldsBuilder {
 		GetCustomFieldsBuilder::new(Arc::clone(&self.client))
 	}
