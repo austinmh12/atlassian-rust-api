@@ -23,7 +23,10 @@ pub(crate) struct RestClient {
 
 impl RestClient {
 	fn rest_endpoint(&self, path: &str) -> Result<Url> {
-		Ok(self.url.join(&format!("{}/{}/{}", self.api_root, &self.api_version, path))?)
+		let resource = vec![&self.api_root, &self.api_version, path];
+		// Remove leading and trailing '/' from each portion of the resource
+		let resource = resource.iter().map(|s| s.trim_matches('/')).collect::<Vec<&str>>().join("/");
+		Ok(self.url.join(&resource)?)
 	}
 
 	/// Creates a `reqwest::Request` with the given method, sends the request,
