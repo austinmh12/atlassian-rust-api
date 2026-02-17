@@ -29,7 +29,7 @@ impl Endpoint for GetCustomFieldsRequest {
 		let mut params = QueryParams::default();
 		params
 			.push("startAt", self.start_at.unwrap_or(1))
-			.push("limit", self.limit.unwrap_or(50))
+			.push("maxResults", self.limit.unwrap_or(50))
 			.push_opt("search", self.search.as_ref());
 		params
 	}
