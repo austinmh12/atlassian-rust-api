@@ -15,8 +15,8 @@ pub(crate) struct RestClient {
 	pub(crate) api_root: String,
 	/// Version of the API to use, defaults to "latest"
 	pub(crate) api_version: String,
-	/// Turn on/off SSL verification, defaults to true
-	pub(crate) verify_ssl: bool,
+	/// Turn on/off cloud methods
+	pub(crate) cloud: bool,
 	/// Inner client session object
 	pub(crate) session: reqwest::Client,
 }

@@ -50,8 +50,8 @@ impl JiraBuilder {
 		self
 	}
 
-	pub fn verify_ssl(mut self, verify_ssl: bool) -> JiraBuilder {
-		self.client = self.client.verify_ssl(verify_ssl);
+	pub fn cloud(mut self, cloud: bool) -> JiraBuilder {
+		self.client = self.client.cloud(cloud);
 		self
 	}
 

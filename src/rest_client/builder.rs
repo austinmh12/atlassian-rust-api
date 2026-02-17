@@ -16,7 +16,7 @@ pub(crate) struct RestClientBuilder {
 	/// Version of the API to use, defaults to "latest"
 	api_version: Option<String>,
 	/// Turn on/off SSL verification, defaults to true
-	verify_ssl: Option<bool>,
+	cloud: Option<bool>,
 	/// Inner client session object
 	session: Option<reqwest::Client>,
 }
@@ -52,8 +52,8 @@ impl RestClientBuilder {
 		self
 	}
 
-	pub fn verify_ssl(mut self, verify_ssl: bool) -> RestClientBuilder {
-		self.verify_ssl = Some(verify_ssl);
+	pub fn cloud(mut self, cloud: bool) -> RestClientBuilder {
+		self.cloud = Some(cloud);
 		self
 	}
 
@@ -70,7 +70,7 @@ impl RestClientBuilder {
 			timeout: self.timeout.unwrap_or(75),
 			api_root: self.api_root.unwrap_or("rest/api".to_string()),
 			api_version: self.api_version.unwrap_or("latest".to_string()),
-			verify_ssl: self.verify_ssl.unwrap_or(true),
+			cloud: self.cloud.unwrap_or(false),
 			session: self.session.unwrap_or(reqwest::Client::new()),
 		})
 	}
