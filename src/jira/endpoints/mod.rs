@@ -1,1 +1,5 @@
-mod get_permissions;
+// Modules
+mod permissions;
+
+// Flatten
+pub use permissions::*;
