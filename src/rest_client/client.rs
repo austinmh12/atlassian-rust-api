@@ -97,6 +97,7 @@ impl RestClient {
 		self.request(request, Method::GET).await
 	}
 
+	/// Convenience function for PUT requests with no return.
 	pub async fn put_ignore<E>(&self, request: E) -> Result<()>
 	where
 		E: Endpoint,
