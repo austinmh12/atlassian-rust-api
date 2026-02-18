@@ -10,7 +10,7 @@ pub(crate) struct RestClient {
 	/// Password, defaults to None.
 	pub(crate) password: Option<String>,
 	/// Request timeout, defaults to 75.
-	pub(crate) timeout: u32,
+	pub(crate) timeout: u64,
 	/// Root for the API requests, defaults to "rest/api"
 	pub(crate) api_root: String,
 	/// Version of the API to use, defaults to "latest"
@@ -22,6 +22,7 @@ pub(crate) struct RestClient {
 }
 
 impl RestClient {
+	/// Creates a URL with the api root, api version, and the path given
 	fn rest_endpoint(&self, path: &str) -> Result<Url> {
 		let resource = vec![&self.api_root, &self.api_version, path];
 		// Remove leading and trailing '/' from each portion of the resource
@@ -29,7 +30,7 @@ impl RestClient {
 		Ok(self.url.join(&resource)?)
 	}
 
-	/// Creates a `reqwest::Request` with the given method, sends the request,
+	/// Creates a [`reqwest::Request`] with the given method, sends the request,
 	/// and attempts to deserialize the response into the given `T`
 	async fn request<T, E>(&self, request: E, method: Method) -> Result<T>
 	where
@@ -45,7 +46,9 @@ impl RestClient {
 			Method::PUT => self.session.put(url),
 			Method::DELETE => self.session.delete(url),
 			_ => return Err(Error::UnsupportedOperation(method))
-		}.header("Accept", "application/json");
+		}
+			.header("Accept", "application/json")
+			.timeout(std::time::Duration::from_secs(self.timeout));
 		let req = if let Some((mime_type, body)) = request.body()? {
 			req.header("Content-Type", mime_type).body(body)
 		} else {
@@ -59,7 +62,7 @@ impl RestClient {
 		}
 	}
 
-	/// Creates a `reqwest::Request` with the given method, sends the request,
+	/// Creates a [`reqwest::Request`] with the given method, sends the request,
 	/// and returns nothing if the request is successful.
 	async fn ignore<E>(&self, request: E, method: Method) -> Result<()>
 	where
@@ -74,7 +77,9 @@ impl RestClient {
 			Method::PUT => self.session.put(url),
 			Method::DELETE => self.session.delete(url),
 			_ => return Err(Error::UnsupportedOperation(method))
-		}.header("Accept", "application/json");
+		}
+			.header("Accept", "application/json")
+			.timeout(std::time::Duration::from_secs(self.timeout));
 		let req = if let Some((mime_type, body)) = request.body()? {
 			req.header("Content-Type", mime_type).body(body)
 		} else {

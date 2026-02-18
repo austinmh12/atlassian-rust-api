@@ -10,7 +10,7 @@ pub(crate) struct RestClientBuilder {
 	/// Password, defaults to None.
 	password: Option<String>,
 	/// Request timeout, defaults to 75.
-	timeout: Option<u32>,
+	timeout: Option<u64>,
 	/// Root for the API requests, defaults to "rest/api"
 	api_root: Option<String>,
 	/// Version of the API to use, defaults to "latest"
@@ -37,7 +37,7 @@ impl RestClientBuilder {
 		self
 	}
 
-	pub fn timeout(mut self, timeout: u32) -> RestClientBuilder {
+	pub fn timeout(mut self, timeout: u64) -> RestClientBuilder {
 		self.timeout = Some(timeout);
 		self
 	}

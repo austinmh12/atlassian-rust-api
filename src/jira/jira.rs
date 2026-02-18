@@ -35,7 +35,7 @@ impl JiraBuilder {
 		self
 	}
 
-	pub fn timeout(mut self, timeout: u32) -> JiraBuilder {
+	pub fn timeout(mut self, timeout: u64) -> JiraBuilder {
 		self.client = self.client.timeout(timeout);
 		self
 	}
