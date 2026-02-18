@@ -118,4 +118,12 @@ impl RestClient {
 	{
 		self.ignore(request, Method::PUT).await
 	}
+
+	/// Convenience function for DELETE requests with no return.
+	pub async fn delete_ignore<E>(&self, request: E) -> Result<()>
+	where
+		E: Endpoint,
+	{
+		self.ignore(request, Method::DELETE).await
+	}
 }
