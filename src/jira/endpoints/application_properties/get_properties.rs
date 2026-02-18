@@ -62,8 +62,7 @@ impl GetPropertyBuilder {
 crate::macros::futurize!(GetPropertyBuilder, serde_json::Value);
 
 impl Jira {
-	/// Returns an application property or a list of application properties. Returns a [GetPropertyBuilder] for adjusting
-	/// the parameters on the request.
+	/// Returns an application property or a list of application properties.
 	/// 
 	/// ```no_run
 	/// let jira = Jira::builder().url("http://jira.example.com")
