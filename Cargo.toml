@@ -20,3 +20,9 @@ serde_json = "1"
 
 # Utils
 derive_more = { version = "2.1", features = ["from", "display"] }
+
+[features]
+default = ["jira"]
+
+jira = []
+experimental = []
