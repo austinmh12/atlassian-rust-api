@@ -1,0 +1,3 @@
+mod get_all_system_avatars;
+mod store_temporary_avatar;
+mod create_avatar_from_temporary;

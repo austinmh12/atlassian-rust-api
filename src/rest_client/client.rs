@@ -102,6 +102,23 @@ impl RestClient {
 		self.request(request, Method::GET).await
 	}
 
+	/// Convenience function for POST requests.
+	pub async fn post<T, E>(&self, request: E) -> Result<T>
+	where
+		T: serde::de::DeserializeOwned,
+		E: Endpoint,
+	{
+		self.request(request, Method::POST).await
+	}
+
+	/// Convenience function for POST requests with no return.
+	pub async fn post_ignore<E>(&self, request: E) -> Result<()>
+	where
+		E: Endpoint,
+	{
+		self.ignore(request, Method::POST).await
+	}
+
 	/// Convenience function for PUT requests.
 	pub async fn put<T, E>(&self, request: E) -> Result<T>
 	where
