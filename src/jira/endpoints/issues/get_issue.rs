@@ -46,7 +46,7 @@ impl Endpoint for GetIssueRequest {
 }
 
 impl GetIssueBuilder {
-	pub(crate) fn new(client: Arc<RestClient>) -> GetIssueBuilder {
+	fn new(client: Arc<RestClient>) -> GetIssueBuilder {
 		GetIssueBuilder { client, request: GetIssueRequest::default() }
 	}
 

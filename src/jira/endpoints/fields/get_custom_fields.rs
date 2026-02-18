@@ -36,7 +36,7 @@ impl Endpoint for GetCustomFieldsRequest {
 }
 
 impl GetCustomFieldsBuilder {
-	pub(crate) fn new(client: Arc<RestClient>) -> GetCustomFieldsBuilder {
+	fn new(client: Arc<RestClient>) -> GetCustomFieldsBuilder {
 		let cloud = client.cloud.clone();
 		GetCustomFieldsBuilder { client, request: GetCustomFieldsRequest { cloud, ..Default::default() } }
 	}

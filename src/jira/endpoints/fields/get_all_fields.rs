@@ -18,7 +18,7 @@ impl Endpoint for GetAllFieldsRequest {
 }
 
 impl GetAllFieldsBuilder {
-	pub(crate) fn new(client: Arc<RestClient>) -> GetAllFieldsBuilder {
+	fn new(client: Arc<RestClient>) -> GetAllFieldsBuilder {
 		GetAllFieldsBuilder { client, request: GetAllFieldsRequest::default() }
 	}
 

@@ -29,7 +29,7 @@ impl Endpoint for SetPropertyRequest {
 }
 
 impl SetPropertyBuilder {
-	pub(crate) fn new(client: Arc<RestClient>) -> SetPropertyBuilder {
+	fn new(client: Arc<RestClient>) -> SetPropertyBuilder {
 		SetPropertyBuilder { client, request: SetPropertyRequest::default() }
 	}
 

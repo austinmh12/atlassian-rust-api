@@ -31,7 +31,7 @@ impl Endpoint for GetPropertyRequest {
 }
 
 impl GetPropertyBuilder {
-	pub(crate) fn new(client: Arc<RestClient>) -> GetPropertyBuilder {
+	fn new(client: Arc<RestClient>) -> GetPropertyBuilder {
 		GetPropertyBuilder { client, request: GetPropertyRequest::default() }
 	}
 

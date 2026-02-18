@@ -36,7 +36,7 @@ impl Endpoint for GetPermissionsRequest {
 }
 
 impl GetPermissionsBuilder {
-	pub(crate) fn new(client: Arc<RestClient>) -> GetPermissionsBuilder {
+	fn new(client: Arc<RestClient>) -> GetPermissionsBuilder {
 		GetPermissionsBuilder { client, request: GetPermissionsRequest::default() }
 	}
 

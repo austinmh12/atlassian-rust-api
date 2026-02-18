@@ -18,7 +18,7 @@ impl Endpoint for GetAdvancedSettingsRequest {
 }
 
 impl GetAdvancedSettingsBuilder {
-	pub(crate) fn new(client: Arc<RestClient>) -> GetAdvancedSettingsBuilder {
+	fn new(client: Arc<RestClient>) -> GetAdvancedSettingsBuilder {
 		GetAdvancedSettingsBuilder { client, request: GetAdvancedSettingsRequest::default() }
 	}
 
