@@ -1,6 +1,6 @@
 use std::sync::Arc;
 
-use crate::{Jira, Result, rest_client::RestClient, web::{Endpoint, JsonFormParams, QueryParams}};
+use crate::{Jira, Result, rest_client::RestClient, web::{Endpoint, JsonFormParams}};
 
 #[derive(Debug, Clone)]
 pub struct UpdateApplicationRolesBuilder {
@@ -13,7 +13,7 @@ struct UpdateApplicationRolesRequest {
 	key: String,
 	groups: Vec<String>,
 	default_groups: Vec<String>,
-	if_match: Option<String>,
+	//TODO: if_match: Option<String>,
 }
 
 impl Endpoint for UpdateApplicationRolesRequest {
