@@ -73,13 +73,10 @@ impl GetPermissionsBuilder {
 		self
 	}
 
-	async fn send(self) -> Result<serde_json::Value> {
+	pub async fn send(self) -> Result<serde_json::Value> {
 		self.client.get(self.request).await
 	}
 }
-
-// Impl IntoFuture for GetPermissionsBuilder
-crate::macros::futurize!(GetPermissionsBuilder, serde_json::Value);
 
 // Impl Jira
 impl Jira {

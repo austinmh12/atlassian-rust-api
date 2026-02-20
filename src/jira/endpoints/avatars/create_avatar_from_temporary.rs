@@ -53,12 +53,10 @@ impl CreateAvatarFromTemporaryBuilder {
 		self
 	}
 
-	async fn send(self) -> Result<()> {
+	pub async fn send(self) -> Result<()> {
 		self.client.post_ignore(self.request).await
 	}
 }
-
-crate::macros::futurize!(CreateAvatarFromTemporaryBuilder);
 
 impl Jira {
 	/// Updates the cropping instructions of the temporary avatar.

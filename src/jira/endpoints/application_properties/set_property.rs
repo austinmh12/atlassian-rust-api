@@ -43,17 +43,15 @@ impl SetPropertyBuilder {
 		self
 	}
 
-	async fn send(self) -> Result<()> {
+	pub async fn send(self) -> Result<()> {
 		self.client.put_ignore(self.request).await
 	}
 }
 
-crate::macros::futurize!(SetPropertyBuilder);
-
 impl Jira {
 	/// Modify an application property via PUT. The "value" field present in the PUT will override the
 	/// existing value.
-	pub async fn set_property(&self, id: impl Into<String>, value: impl Into<String>) -> Result<()> {
-		SetPropertyBuilder::new(Arc::clone(&self.client)).id(id).value(value).await
+	pub async fn set_property(&self, id: impl Into<String>, value: impl Into<String>) -> SetPropertyBuilder {
+		SetPropertyBuilder::new(Arc::clone(&self.client)).id(id).value(value)
 	}
 }

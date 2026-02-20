@@ -22,16 +22,14 @@ impl GetAdvancedSettingsBuilder {
 		GetAdvancedSettingsBuilder { client, request: GetAdvancedSettingsRequest::default() }
 	}
 
-	async fn send(self) -> Result<serde_json::Value> {
+	pub async fn send(self) -> Result<serde_json::Value> {
 		self.client.get(self.request).await
 	}
 }
 
-crate::macros::futurize!(GetAdvancedSettingsBuilder, serde_json::Value);
-
 impl Jira {
 	/// Returns the properties that are displayed on the "General Configuration > Advanced Settings" page.
-	pub async fn get_advanced_settings(&self) -> Result<serde_json::Value> {
-		GetAdvancedSettingsBuilder::new(Arc::clone(&self.client)).await
+	pub async fn get_advanced_settings(&self) -> GetAdvancedSettingsBuilder {
+		GetAdvancedSettingsBuilder::new(Arc::clone(&self.client))
 	}
 }

@@ -29,17 +29,15 @@ impl GetRoleBuilder {
 		self
 	}
 
-	async fn send(self) -> Result<serde_json::Value> {
+	pub async fn send(self) -> Result<serde_json::Value> {
 		self.client.get(self.request).await
 	}
 }
 
-crate::macros::futurize!(GetRoleBuilder, serde_json::Value);
-
 impl Jira {
 	/// Returns the ApplicationRole with the given key if it exists. Returns a 404 if the ApplicationRole
 	/// is not found.
-	pub async fn get_role(&self, key: impl Into<String>) -> Result<serde_json::Value> {
-		GetRoleBuilder::new(Arc::clone(&self.client)).key(key).await
+	pub async fn get_role(&self, key: impl Into<String>) -> GetRoleBuilder {
+		GetRoleBuilder::new(Arc::clone(&self.client)).key(key)
 	}
 }

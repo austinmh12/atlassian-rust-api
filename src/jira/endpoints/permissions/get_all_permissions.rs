@@ -22,16 +22,14 @@ impl GetAllPermissionsBuilder {
 		GetAllPermissionsBuilder { client, request: GetAllPermissionsRequest::default() }
 	}
 
-	async fn send(self) -> Result<serde_json::Value> {
+	pub async fn send(self) -> Result<serde_json::Value> {
 		self.client.get(self.request).await
 	}
 }
 
-crate::macros::futurize!(GetAllPermissionsBuilder, serde_json::Value);
-
 impl Jira {
 	/// Returns all permissions that are present in the Jira instance
-	pub async fn get_all_permissions(&self) -> Result<serde_json::Value> {
-		GetAllPermissionsBuilder::new(Arc::clone(&self.client)).await
+	pub async fn get_all_permissions(&self) -> GetAllPermissionsBuilder {
+		GetAllPermissionsBuilder::new(Arc::clone(&self.client))
 	}
 }

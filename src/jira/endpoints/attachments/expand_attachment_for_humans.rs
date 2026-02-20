@@ -29,16 +29,14 @@ impl ExpandAttachmentForHumansBuilder {
 		self
 	}
 
-	async fn send(self) -> Result<serde_json::Value> {
+	pub async fn send(self) -> Result<serde_json::Value> {
 		self.client.get(self.request).await
 	}
 }
 
-crate::macros::futurize!(ExpandAttachmentForHumansBuilder, serde_json::Value);
-
 impl Jira {
 	/// Tries to expand an attachment. Output is human-readable and subject to change.
-	pub async fn expand_attachment_for_humans(&self, id: u32) -> Result<serde_json::Value> {
-		ExpandAttachmentForHumansBuilder::new(Arc::clone(&self.client)).id(id).await
+	pub async fn expand_attachment_for_humans(&self, id: u32) -> ExpandAttachmentForHumansBuilder {
+		ExpandAttachmentForHumansBuilder::new(Arc::clone(&self.client)).id(id)
 	}
 }

@@ -120,12 +120,10 @@ impl GetIssueBuilder {
 		self
 	}
 
-	async fn send(self) -> Result<serde_json::Value> {
+	pub async fn send(self) -> Result<serde_json::Value> {
 		self.client.get(self.request).await
 	}
 }
-
-crate::macros::futurize!(GetIssueBuilder, serde_json::Value);
 
 impl Jira {
 	/// Returns a full representation of the issue for the given issue key. By default, all

@@ -54,12 +54,10 @@ impl GetPropertyBuilder {
 		self
 	}
 
-	async fn send(self) -> Result<serde_json::Value> {
+	pub async fn send(self) -> Result<serde_json::Value> {
 		self.client.get(self.request).await
 	}
 }
-
-crate::macros::futurize!(GetPropertyBuilder, serde_json::Value);
 
 impl Jira {
 	/// Returns an application property or a list of application properties.

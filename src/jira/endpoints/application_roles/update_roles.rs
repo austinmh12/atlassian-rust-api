@@ -75,12 +75,10 @@ impl UpdateApplicationRolesBuilder {
 		self
 	}
 
-	async fn send(self) -> Result<serde_json::Value> {
+	pub async fn send(self) -> Result<serde_json::Value> {
 		self.client.put(self.request).await
 	}
 }
-
-crate::macros::futurize!(UpdateApplicationRolesBuilder, serde_json::Value);
 
 impl Jira {
 	/// Updates the ApplicationRoles with the passed data if the version hash is the same as the server. Only

@@ -22,16 +22,14 @@ impl GetRolesBuilder {
 		GetRolesBuilder { client, request: GetRolesRequest::default() }
 	}
 
-	async fn send(self) -> Result<serde_json::Value> {
+	pub async fn send(self) -> Result<serde_json::Value> {
 		self.client.get(self.request).await
 	}
 }
 
-crate::macros::futurize!(GetRolesBuilder, serde_json::Value);
-
 impl Jira {
 	/// Returns all ApplicationRoles in the system.
-	pub async fn get_roles(&self) -> Result<serde_json::Value> {
-		GetRolesBuilder::new(Arc::clone(&self.client)).await
+	pub async fn get_roles(&self) -> GetRolesBuilder {
+		GetRolesBuilder::new(Arc::clone(&self.client))
 	}
 }

@@ -75,12 +75,10 @@ impl UpdateApplicationRoleBuilder {
 		self
 	}
 
-	async fn send(self) -> Result<serde_json::Value> {
+	pub async fn send(self) -> Result<serde_json::Value> {
 		self.client.put(self.request).await
 	}
 }
-
-crate::macros::futurize!(UpdateApplicationRoleBuilder, serde_json::Value);
 
 impl Jira {
 	/// Updates the ApplicationRole with the passed data. Only the groups and default groups setting of the role may be updated.

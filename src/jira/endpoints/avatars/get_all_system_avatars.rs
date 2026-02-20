@@ -29,16 +29,14 @@ impl GetAllSystemAvatarsBuilder {
 		self
 	}
 
-	async fn send(self) -> Result<serde_json::Value> {
+	pub async fn send(self) -> Result<serde_json::Value> {
 		self.client.get(self.request).await
 	}
 }
 
-crate::macros::futurize!(GetAllSystemAvatarsBuilder, serde_json::Value);
-
 impl Jira {
 	/// Returns all system avatars of the given type
-	pub async fn get_all_system_avatars(&self, avatar_type: impl Into<String>) -> Result<serde_json::Value> {
-		GetAllSystemAvatarsBuilder::new(Arc::clone(&self.client)).avatar_type(avatar_type).await
+	pub async fn get_all_system_avatars(&self, avatar_type: impl Into<String>) -> GetAllSystemAvatarsBuilder {
+		GetAllSystemAvatarsBuilder::new(Arc::clone(&self.client)).avatar_type(avatar_type)
 	}
 }

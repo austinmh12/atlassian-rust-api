@@ -22,16 +22,14 @@ impl GetAttachmentMetaBuilder {
 		GetAttachmentMetaBuilder { client, request: GetAttachmentMetaRequest::default() }
 	}
 
-	async fn send(self) -> Result<serde_json::Value> {
+	pub async fn send(self) -> Result<serde_json::Value> {
 		self.client.get(self.request).await
 	}
 }
 
-crate::macros::futurize!(GetAttachmentMetaBuilder, serde_json::Value);
-
 impl Jira {
 	/// Returns the meta information for attachments, specifically if they are enabled and the maximum upload size allowed.
-	pub async fn get_attachment_meta(&self) -> Result<serde_json::Value> {
-		GetAttachmentMetaBuilder::new(Arc::clone(&self.client)).await
+	pub async fn get_attachment_meta(&self) -> GetAttachmentMetaBuilder {
+		GetAttachmentMetaBuilder::new(Arc::clone(&self.client))
 	}
 }

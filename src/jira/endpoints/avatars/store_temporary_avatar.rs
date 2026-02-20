@@ -49,12 +49,10 @@ impl StoreTemporaryAvatarBuilder {
 		self
 	}
 
-	async fn send(self) -> Result<serde_json::Value> {
+	pub async fn send(self) -> Result<serde_json::Value> {
 		self.client.post(self.request).await
 	}
 }
-
-crate::macros::futurize!(StoreTemporaryAvatarBuilder, serde_json::Value);
 
 impl Jira {
 	/// Creates a temporary avatar and returns cropping instructions
@@ -63,11 +61,10 @@ impl Jira {
 		avatar_type: impl Into<String>,
 		filename: impl Into<String>,
 		size: u64,
-	) -> Result<serde_json::Value> {
+	) -> StoreTemporaryAvatarBuilder {
 		StoreTemporaryAvatarBuilder::new(Arc::clone(&self.client))
 			.avatar_type(avatar_type)
 			.filename(filename)
 			.size(size)
-			.await
 	}
 }

@@ -29,16 +29,14 @@ impl GetAttachmentBuilder {
 		self
 	}
 
-	async fn send(self) -> Result<serde_json::Value> {
+	pub async fn send(self) -> Result<serde_json::Value> {
 		self.client.get(self.request).await
 	}
 }
 
-crate::macros::futurize!(GetAttachmentBuilder, serde_json::Value);
-
 impl Jira {
 	/// Returns the meta-data for an attachment, including the URI of the actual attached file.
-	pub async fn get_attachment(&self, id: u32) -> Result<serde_json::Value> {
-		GetAttachmentBuilder::new(Arc::clone(&self.client)).id(id).await
+	pub async fn get_attachment(&self, id: u32) -> GetAttachmentBuilder {
+		GetAttachmentBuilder::new(Arc::clone(&self.client)).id(id)
 	}
 }

@@ -29,16 +29,14 @@ impl RemoveAttachmentBuilder {
 		self
 	}
 
-	async fn send(self) -> Result<()> {
+	pub async fn send(self) -> Result<()> {
 		self.client.delete_ignore(self.request).await
 	}
 }
 
-crate::macros::futurize!(RemoveAttachmentBuilder);
-
 impl Jira {
 	/// Remove an attachment from an issue.
-	pub async fn remove_attachment(&self, id: u32) -> Result<()> {
-		RemoveAttachmentBuilder::new(Arc::clone(&self.client)).id(id).await
+	pub async fn remove_attachment(&self, id: u32) -> RemoveAttachmentBuilder {
+		RemoveAttachmentBuilder::new(Arc::clone(&self.client)).id(id)
 	}
 }
