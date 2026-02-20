@@ -29,7 +29,7 @@ impl GetAttachmentMetaBuilder {
 
 impl Jira {
 	/// Returns the meta information for attachments, specifically if they are enabled and the maximum upload size allowed.
-	pub async fn get_attachment_meta(&self) -> GetAttachmentMetaBuilder {
+	pub fn get_attachment_meta(&self) -> GetAttachmentMetaBuilder {
 		GetAttachmentMetaBuilder::new(Arc::clone(&self.client))
 	}
 }

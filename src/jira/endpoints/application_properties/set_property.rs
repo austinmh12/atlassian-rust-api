@@ -51,7 +51,7 @@ impl SetPropertyBuilder {
 impl Jira {
 	/// Modify an application property via PUT. The "value" field present in the PUT will override the
 	/// existing value.
-	pub async fn set_property(&self, id: impl Into<String>, value: impl Into<String>) -> SetPropertyBuilder {
+	pub fn set_property(&self, id: impl Into<String>, value: impl Into<String>) -> SetPropertyBuilder {
 		SetPropertyBuilder::new(Arc::clone(&self.client)).id(id).value(value)
 	}
 }

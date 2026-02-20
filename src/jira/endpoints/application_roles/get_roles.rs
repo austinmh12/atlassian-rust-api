@@ -29,7 +29,7 @@ impl GetRolesBuilder {
 
 impl Jira {
 	/// Returns all ApplicationRoles in the system.
-	pub async fn get_roles(&self) -> GetRolesBuilder {
+	pub fn get_roles(&self) -> GetRolesBuilder {
 		GetRolesBuilder::new(Arc::clone(&self.client))
 	}
 }

@@ -29,7 +29,7 @@ impl GetAllPermissionsBuilder {
 
 impl Jira {
 	/// Returns all permissions that are present in the Jira instance
-	pub async fn get_all_permissions(&self) -> GetAllPermissionsBuilder {
+	pub fn get_all_permissions(&self) -> GetAllPermissionsBuilder {
 		GetAllPermissionsBuilder::new(Arc::clone(&self.client))
 	}
 }

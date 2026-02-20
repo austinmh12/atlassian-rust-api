@@ -29,7 +29,7 @@ impl GetAdvancedSettingsBuilder {
 
 impl Jira {
 	/// Returns the properties that are displayed on the "General Configuration > Advanced Settings" page.
-	pub async fn get_advanced_settings(&self) -> GetAdvancedSettingsBuilder {
+	pub fn get_advanced_settings(&self) -> GetAdvancedSettingsBuilder {
 		GetAdvancedSettingsBuilder::new(Arc::clone(&self.client))
 	}
 }

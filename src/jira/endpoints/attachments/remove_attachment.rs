@@ -36,7 +36,7 @@ impl RemoveAttachmentBuilder {
 
 impl Jira {
 	/// Remove an attachment from an issue.
-	pub async fn remove_attachment(&self, id: u32) -> RemoveAttachmentBuilder {
+	pub fn remove_attachment(&self, id: u32) -> RemoveAttachmentBuilder {
 		RemoveAttachmentBuilder::new(Arc::clone(&self.client)).id(id)
 	}
 }

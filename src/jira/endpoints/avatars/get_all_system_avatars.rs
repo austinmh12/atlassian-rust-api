@@ -36,7 +36,7 @@ impl GetAllSystemAvatarsBuilder {
 
 impl Jira {
 	/// Returns all system avatars of the given type
-	pub async fn get_all_system_avatars(&self, avatar_type: impl Into<String>) -> GetAllSystemAvatarsBuilder {
+	pub fn get_all_system_avatars(&self, avatar_type: impl Into<String>) -> GetAllSystemAvatarsBuilder {
 		GetAllSystemAvatarsBuilder::new(Arc::clone(&self.client)).avatar_type(avatar_type)
 	}
 }

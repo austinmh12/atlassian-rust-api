@@ -36,7 +36,7 @@ impl ExpandAttachmentForRobotsBuilder {
 
 impl Jira {
 	/// Tries to expand an attachment. Output is raw and should be backwards-compatible through the course of time.
-	pub async fn expand_attachment_for_robots(&self, id: u32) -> ExpandAttachmentForRobotsBuilder {
+	pub fn expand_attachment_for_robots(&self, id: u32) -> ExpandAttachmentForRobotsBuilder {
 		ExpandAttachmentForRobotsBuilder::new(Arc::clone(&self.client)).id(id)
 	}
 }

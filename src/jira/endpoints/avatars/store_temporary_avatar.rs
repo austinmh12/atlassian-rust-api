@@ -56,7 +56,7 @@ impl StoreTemporaryAvatarBuilder {
 
 impl Jira {
 	/// Creates a temporary avatar and returns cropping instructions
-	pub async fn store_temporary_avatar(
+	pub fn store_temporary_avatar(
 		&self,
 		avatar_type: impl Into<String>,
 		filename: impl Into<String>,

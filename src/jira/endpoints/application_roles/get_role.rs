@@ -37,7 +37,7 @@ impl GetRoleBuilder {
 impl Jira {
 	/// Returns the ApplicationRole with the given key if it exists. Returns a 404 if the ApplicationRole
 	/// is not found.
-	pub async fn get_role(&self, key: impl Into<String>) -> GetRoleBuilder {
+	pub fn get_role(&self, key: impl Into<String>) -> GetRoleBuilder {
 		GetRoleBuilder::new(Arc::clone(&self.client)).key(key)
 	}
 }

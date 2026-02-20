@@ -36,7 +36,7 @@ impl GetAttachmentBuilder {
 
 impl Jira {
 	/// Returns the meta-data for an attachment, including the URI of the actual attached file.
-	pub async fn get_attachment(&self, id: u32) -> GetAttachmentBuilder {
+	pub fn get_attachment(&self, id: u32) -> GetAttachmentBuilder {
 		GetAttachmentBuilder::new(Arc::clone(&self.client)).id(id)
 	}
 }

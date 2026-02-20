@@ -36,7 +36,7 @@ impl ExpandAttachmentForHumansBuilder {
 
 impl Jira {
 	/// Tries to expand an attachment. Output is human-readable and subject to change.
-	pub async fn expand_attachment_for_humans(&self, id: u32) -> ExpandAttachmentForHumansBuilder {
+	pub fn expand_attachment_for_humans(&self, id: u32) -> ExpandAttachmentForHumansBuilder {
 		ExpandAttachmentForHumansBuilder::new(Arc::clone(&self.client)).id(id)
 	}
 }
