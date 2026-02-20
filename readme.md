@@ -15,7 +15,7 @@ Note that this is currently under heavy construction and I am currently focusing
 See the `examples/` folder for more in-depth usage.
 
 ## Quickstart
-These quickstarts assume `tokio` is being used to provide the async runtime, but the library is agnostic of the async runtime.
+Most of these quickstarts assume `tokio` is being used to provide the async runtime, but the library is agnostic of the async runtime.
 
 ### Jira
 ```rust
@@ -34,6 +34,38 @@ async fn main() -> atlassian_rust_api::Result<()> {
 	}
 
 	Ok(())
+}
+```
+
+#### Rocket example
+```rust
+#[macro_use]
+extern crate rocket;
+
+use atlassian_rust_api::Jira;
+
+#[get("/<key>")]
+async fn issue(key: &str) -> String {
+	// This should really be managed by Rocket but this is a tiny example
+	let jira = Jira::builder()
+		.url("https://jira.example.com")
+		.username("user")
+		.password("password")
+		.build().unwrap();
+	let _issue = jira.get_issue(key).await.unwrap();
+	if let Some(fields) = issue.get("fields") {
+		if let Some(summary) = fields.get("summary") {
+			return summary.to_string()
+		}
+		return "".to_string()
+	}
+
+	"".to_string()
+}
+
+#[launch]
+fn rocket() -> _ {
+	rocket::build().mount("/", routes![issue])
 }
 ```
 
