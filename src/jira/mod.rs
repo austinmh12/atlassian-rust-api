@@ -1,5 +1,6 @@
 // Modules
 mod endpoints;
+#[cfg(feature = "jira")]
 mod jira;
 
 // Flatten
