@@ -4,6 +4,7 @@ mod application_roles;
 mod attachments;
 mod avatars;
 mod cluster;
+#[cfg(feature = "experimental")]
 mod comment_properties;
 mod components;
 mod configuration;
