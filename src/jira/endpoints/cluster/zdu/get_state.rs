@@ -23,7 +23,7 @@ impl GetStateBuilder {
 	}
 
 	pub async fn send(self) -> Result<()> {
-		self.client.post_ignore(self.request).await
+		self.client.get(self.request).await
 	}
 }
 
