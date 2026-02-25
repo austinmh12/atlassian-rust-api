@@ -6,7 +6,7 @@ authors = ["Austin Heil"]
 description = "A wrapper for the Atlassian REST API written in Rust"
 readme = "readme.md"
 repository = "https://github.com/austinmh12/atlassian-rust-api.git"
-license = "Apache License 2.0"
+license = "Apache-2.0"
 keywords = ["rest", "api", "atlassian", "jira", "confluence", "bitbucket"]
 
 [dependencies]
