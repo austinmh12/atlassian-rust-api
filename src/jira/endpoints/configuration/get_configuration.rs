@@ -28,6 +28,8 @@ impl GetConfigurationBuilder {
 }
 
 impl Jira {
+	/// Returns the information if the optional features in Jira are enabled or disabled. If the time 
+	/// tracking is enabled, it also returns the detailed information about time tracking configuration.
 	pub fn get_configuration(&self) -> GetConfigurationBuilder {
 		GetConfigurationBuilder::new(Arc::clone(&self.client))
 	}
