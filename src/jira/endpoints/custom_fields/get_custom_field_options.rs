@@ -118,7 +118,7 @@ impl GetCustomFieldOptionsBuilder {
 	}
 
 
-	pub async fn send(self) -> Result<()> {
+	pub async fn send(self) -> Result<serde_json::Value> {
 		self.client.get(self.request).await
 	}
 }
