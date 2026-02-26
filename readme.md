@@ -23,11 +23,10 @@ use atlassian_rust_api::Jira;
 
 #[tokio::main]
 async fn main() -> atlassian_rust_api::Result<()> {
-	let jira = Jira::builder()
-		.url("https://jira.example.com")
+	let jira = Jira::new("https://jira.example.com")? // Errs if the URL cannot be parsed.
 		.username("user")
 		.password("password")
-		.build()?; // Errs if the URL cannot be parsed.
+		.build();
 	let issue = jira.get_issue("ABC-123").send().await?;
 	if let Some(fields) = issue.get("fields") {
 		println!("{:?}", fields);

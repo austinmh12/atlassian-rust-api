@@ -4,7 +4,7 @@ use crate::Result;
 #[derive(Debug, Default)]
 pub(crate) struct RestClientBuilder {
 	/// The url to be used in the request
-	url: Option<String>,
+	url: Option<url::Url>,
 	/// Username, defaults to None.
 	username: Option<String>,
 	/// Password, defaults to None.
@@ -15,16 +15,16 @@ pub(crate) struct RestClientBuilder {
 	api_root: Option<String>,
 	/// Version of the API to use, defaults to "latest"
 	api_version: Option<String>,
-	/// Turn on/off SSL verification, defaults to true
-	cloud: Option<bool>,
 	/// Inner client session object
 	session: Option<reqwest::Client>,
 }
 
 impl RestClientBuilder {
-	pub fn url(mut self, url: impl Into<String>) -> RestClientBuilder {
-		self.url = Some(url.into());
-		self
+	pub fn url(mut self, url: impl Into<String>) -> Result<RestClientBuilder> {
+		let url = url.into();
+		let url = url::Url::parse(&url)?;
+		self.url = Some(url);
+		Ok(self)
 	}
 
 	pub fn username(mut self, username: impl Into<String>) -> RestClientBuilder {
@@ -52,11 +52,6 @@ impl RestClientBuilder {
 		self
 	}
 
-	pub fn cloud(mut self, cloud: bool) -> RestClientBuilder {
-		self.cloud = Some(cloud);
-		self
-	}
-
 	pub fn session(mut self, session: reqwest::Client) -> RestClientBuilder {
 		self.session = Some(session);
 		self
@@ -64,13 +59,12 @@ impl RestClientBuilder {
 
 	pub fn build(self) -> Result<RestClient> {
 		Ok(RestClient {
-			url: url::Url::parse(&self.url.unwrap_or_default())?,
+			url: self.url.unwrap(), // Will panic if None
 			username: self.username,
 			password: self.password,
 			timeout: self.timeout.unwrap_or(75),
 			api_root: self.api_root.unwrap_or("rest/api".to_string()),
 			api_version: self.api_version.unwrap_or("latest".to_string()),
-			cloud: self.cloud.unwrap_or(false),
 			session: self.session.unwrap_or(reqwest::Client::new()),
 		})
 	}
