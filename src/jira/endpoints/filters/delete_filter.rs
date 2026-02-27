@@ -30,7 +30,7 @@ impl DeleteFilterBuilder {
 	}
 
 	pub async fn send(self) -> Result<()> {
-		self.client.get(self.request).await
+		self.client.delete_ignore(self.request).await
 	}
 }
 
