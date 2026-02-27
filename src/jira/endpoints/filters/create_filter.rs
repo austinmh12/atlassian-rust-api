@@ -79,6 +79,28 @@ impl CreateFilterBuilder {
 		self
 	}
 
+	/// Add an expand field to the returned data.
+	pub fn expand(mut self, expand: impl Into<String>) -> CreateFilterBuilder {
+		match self.request.expand {
+			Some(ref mut f) => f.push(expand.into()),
+			None => self.request.expand = Some(vec![expand.into()]),
+		};
+		self
+	}
+
+	/// Add multiple expand fields to the returned data.
+	pub fn expands<S>(mut self, expands: impl IntoIterator<Item = S>) -> CreateFilterBuilder 
+	where
+		S: Into<String>,
+	{
+		let expands = expands.into_iter().map(|f| f.into()).collect::<Vec<String>>();
+		match self.request.expand {
+			Some(ref mut f) => f.extend(expands),
+			None => self.request.expand = Some(expands),
+		};
+		self
+	}
+
 	pub async fn send(self) -> Result<serde_json::Value> {
 		self.client.post(self.request).await
 	}
