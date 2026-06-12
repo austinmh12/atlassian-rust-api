@@ -46,8 +46,7 @@ use atlassian_rust_api::Jira;
 #[get("/<key>")]
 async fn issue(key: &str) -> String {
 	// This should really be managed by Rocket but this is a tiny example
-	let jira = Jira::builder()
-		.url("https://jira.example.com")
+	let jira = Jira::new("https://jira.example.com").unwrap()
 		.username("user")
 		.password("password")
 		.build().unwrap();
