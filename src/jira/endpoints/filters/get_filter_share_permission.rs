@@ -35,12 +35,13 @@ impl GetFilterSharePermissionBuilder {
 		self
 	}
 
-	pub async fn send(self) -> Result<()> {
+	pub async fn send(self) -> Result<serde_json::Value> {
 		self.client.get(self.request).await
 	}
 }
 
 impl Jira {
+	/// Returns a single share permission of the given filter
 	pub fn get_filter_share_permission(&self, id: u64, permission_id: u64) -> GetFilterSharePermissionBuilder {
 		GetFilterSharePermissionBuilder::new(Arc::clone(&self.client)).id(id).permission_id(permission_id)
 	}
