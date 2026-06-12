@@ -18,6 +18,8 @@ impl Endpoint for SetFilterColumnsRequest {
 	fn endpoint(&self) -> std::borrow::Cow<'static, str> {
 		format!("filter/{}/columns", self.id).into()
 	}
+
+	// TODO: Body
 }
 
 impl SetFilterColumnsBuilder {
