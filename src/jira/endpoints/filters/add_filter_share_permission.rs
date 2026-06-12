@@ -34,8 +34,8 @@ impl AddFilterSharePermissionBuilder {
 
 	// TODO: permissions
 
-	pub async fn send(self) -> Result<()> {
-		self.client.get(self.request).await
+	pub async fn send(self) -> Result<serde_json::Value> {
+		self.client.post(self.request).await
 	}
 }
 
